@@ -1,39 +1,15 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-interface Rating {
-  rate: number;
-  count: number;
-}
 
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  rating: Rating;
-}
+import {  useState } from "react";
+import { useParams } from "react-router-dom";
+import { useProducts } from "../context/ProductContext";
 
 const ProductDetail = () => {
   const { id } = useParams();
   console.log(id);
-  const [product, setProduct] = useState<Product | undefined>();
-  const callApi = async () => {
-    try {
-      const res = await axios.get<Product>(
-        `https://fakestoreapi.com/products/${id}`
-      );
-      setProduct(res.data);
-    } catch (err) {
-      console.error("Failed to fetch products", err);
-    }
-  };
-
-  useEffect(() => {
-    callApi();
-  }, []);
+  const{products, addToCart} = useProducts();
+  // useParams() gives strings
+  // Number(id) converts "5" → 5 so that the comparison works
+  const product = products.find(p=>p.id===Number(id));
 
   const [quantity, setQuantity] = useState<number>(1);
   const increment = () => {
@@ -42,6 +18,10 @@ const ProductDetail = () => {
   const decrement = () => {
       setQuantity(quantity - 1);
   };
+  const handleAddToCart = () => {
+    if (!product) return;
+    addToCart({ item_id: product.id, quantity });
+  }
   return (
     <div className="max-w-5xl mx-auto p-6 mt-12">
       <div className="flex flex-col md:flex-row gap-10 bg-white shadow-lg rounded-lg p-6">
@@ -91,7 +71,8 @@ const ProductDetail = () => {
             <button className="w-fit bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition cursor-pointer">
               Buy Now
             </button>
-            <button className=" w-fit bg-[#e80071] hover:bg-[#C5107B] text-white px-6 py-2 rounded-lg transition cursor-pointer">
+            <button className=" w-fit bg-[#e80071] hover:bg-[#C5107B] text-white px-6 py-2 rounded-lg transition cursor-pointer" 
+            onClick={handleAddToCart}>
               Add to Cart
             </button>
           </div>
