@@ -36,7 +36,16 @@ export const ProductProvider = ({
   children: React.ReactNode;
 }) => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [cart,setCart] = useState<Cart[]>([])
+ // Lazy init from localStorage
+  const [cart, setCart] = useState<Cart[]>(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
   const callApi = async () => {
     try {
       const res = await axios.get<Product[]>(

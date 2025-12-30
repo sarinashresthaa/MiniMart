@@ -14,7 +14,7 @@ const Home = () => {
         <Link
         to = {`/product-detail/${item.id}`}
           key={item.id}
-          className="border border-gray-200 flex flex-col items-center justify-center text-center p-4 hover:shadow-md hover:bg-gray-50 gap-2 rounded transition-transform duration-300 hover:scale-105"
+          className="border border-gray-200 flex flex-col items-center justify-center text-center p-4 hover:shadow-md hover:bg-gray-100 gap-2 rounded "
         
         >
           <img

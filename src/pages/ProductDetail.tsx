@@ -21,18 +21,19 @@ const ProductDetail = () => {
   const handleAddToCart = () => {
     if (!product) return;
     addToCart({ item_id: product.id, quantity });
+    alert("✅ Added to cart successfully!")
   }
   return (
-    <div className="max-w-5xl mx-auto p-6 mt-12">
+    <div className="max-w-5xl mx-auto p-6">
       <div className="flex flex-col md:flex-row gap-10 bg-white shadow-lg rounded-lg p-6">
-        <div className="flex justify-center items-center md:w-1/2">
+        <div className="flex justify-center items-center md:w-1/2 ">
           <img
             src={product?.image}
             alt={product?.title}
-            className="h-72 w-72 object-contain transition-transform duration-300 hover:scale-105"
+            className="h-72 w-72 object-contain transition-transform duration-500 hover:scale-125  ease-in-out "
           />
         </div>
-        <div className="md:w-1/2 flex flex-col gap-4">
+        <div className="md:w-1/2 flex flex-col gap-4 ">
           <h1 className="text-2xl font-semibold text-gray-800">
             {product?.title}
           </h1>
@@ -71,6 +72,7 @@ const ProductDetail = () => {
             <button className="w-fit bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition cursor-pointer">
               Buy Now
             </button>
+
             <button className=" w-fit bg-[#e80071] hover:bg-[#C5107B] text-white px-6 py-2 rounded-lg transition cursor-pointer" 
             onClick={handleAddToCart}>
               Add to Cart
