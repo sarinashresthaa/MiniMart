@@ -24,21 +24,21 @@ const ProductDetail = () => {
     alert("✅ Added to cart successfully!")
   }
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <div className="flex flex-col md:flex-row gap-10 bg-white shadow-lg rounded-lg p-6">
-        <div className="flex justify-center items-center md:w-1/2 ">
+    <div className="max-w-5xl mx-auto lg:p-6 p-1 ">
+      <div className="flex flex-col lg:gap-8 gap-4 bg-white shadow-lg rounded-lg p-6">
+        <div className="flex justify-center items-center">
           <img
             src={product?.image}
             alt={product?.title}
-            className="h-72 w-72 object-contain transition-transform duration-500 hover:scale-125  ease-in-out "
+            className="lg:h-72 lg:w-72 w-62 h-62 md:h-72 md:w-72 object-contain transition-transform duration-500 lg:hover:scale-125   "
           />
         </div>
-        <div className="md:w-1/2 flex flex-col gap-4 ">
+        <div className="flex flex-col lg:gap-4 gap-1 md:gap-4 xl:gap-2">
           <h1 className="text-2xl font-semibold text-gray-800">
             {product?.title}
           </h1>
 
-          <p className="text-gray-600 leading-relaxed">
+          <p className="text-gray-600 leading-relaxed line-clamp-4 md:line-clamp-6">
             {product?.description}
           </p>
 
@@ -68,7 +68,7 @@ const ProductDetail = () => {
             </button>
           </div>
 
-          <div className="mt-4 flex gap-4">
+          <div className="mt-4 flex gap-4 ">
             <button className="w-fit bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition cursor-pointer">
               Buy Now
             </button>

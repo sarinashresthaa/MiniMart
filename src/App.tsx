@@ -3,20 +3,31 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
-import Categories from "./pages/Categories";
+
+import CategoryDetail from "./pages/CategoryDetail";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
-    <>
-      <BrowserRouter>
+    < >
+    <BrowserRouter>
+      <div className="min-h-screen flex flex-col  ">
         <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/product-detail/:id" element={<ProductDetail />} />
-          <Route path ="/category" element={<Categories />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
-      </BrowserRouter>
+        <div className="grow md:px-42 lg:px-32 xl:px-52 2xl:px-82">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/:category/:id" element={<ProductDetail />} />
+            <Route
+              path="/category-detail/:category"
+              element={<CategoryDetail />}
+            />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
+        </div>
+
+        <Footer />
+      </div>
+    </BrowserRouter>
     </>
   );
 };
