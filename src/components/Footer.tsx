@@ -1,5 +1,5 @@
-import { FaGithub } from "react-icons/fa"
-import { FaLinkedin } from "react-icons/fa6"
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa6";
 
 const Footer = () => {
   return (
@@ -7,16 +7,32 @@ const Footer = () => {
       <div className="text-center max-w-6xl mx-auto px-6">
         <h1 className="font-semibold text-2xl text-white mb-4">FakeStore</h1>
         <div className="text-gray-200 mb-6">
-            ©{new Date().getFullYear()} All rights reserved.
+          ©{new Date().getFullYear()} All rights reserved.
         </div>
         <div className="flex justify-center text-xl space-x-6 text-gray-300">
-            <a href=""><FaGithub /></a>
-            <a href=""><FaLinkedin /> </a>
-            <a href=""><FaGithub /></a>
+          <a
+            href="https://www.facebook.com/OnlineNotesNepal"
+            target="_blank"
+            rel="noopenner noreferrer"
+          >
+            <FaFacebook />
+          </a>
+          <a
+            href="https://www.linkedin.com/company/online-notes-nepal"
+            target="_blank" rel="noopenner noreferrer"
+          >
+            <FaLinkedin />
+          </a>
+          <a
+            href="https://www.instagram.com/online_notes_nepal/"
+            target="_blank" rel="noopenner noreferrer"
+          >
+            <FaInstagram />
+          </a>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

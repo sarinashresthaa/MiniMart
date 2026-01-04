@@ -12,7 +12,7 @@ const Category = () => {
   return (
     <div className="relative group inline-block ">
       Category
-      <div className="absolute hidden group-hover:block top-full left-0 bg-white w-48 text-gray-700 font-semibold rounded shadow-md pl-4 capitalize">
+      <div className="absolute hidden group-hover:block top-full left-0 bg-white w-48 text-gray-700 font-semibold rounded shadow-md pl-4 capitalize z-10">
         {categories.map((category) => (
           <Link
             to={`/category-detail/${category}`}

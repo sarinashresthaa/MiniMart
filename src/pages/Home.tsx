@@ -8,31 +8,49 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { Spinner } from "@/components/ui/spinner";
+
 
 const Home = () => {
   // rating itself is an object, so it needs its own type
 
   // const product= products.find((item)=>item.id===1)
   //   console.log(product);
-  const { products } = useProducts();
+  const { products, loading } = useProducts();
+if (loading) {
   return (
-    <>
+    <div className="flex justify-center items-center min-h-[60vh]">
+      <Spinner className="size-8 text-pink-500"/>
+    </div>
+  )
+}
+if (!products) {
+  return (
+    <div className="flex justify-center items-center min-h-[60vh]">
+      <Spinner className="size-8 text-gray-600" />
+    </div>
+  )
+}
+
+
+  return (
+    <div>
       <Carousel
         plugins={[
           Autoplay({
             delay: 2000,
           }),
         ]}
-        className="w-full max-w-xs mx-auto"
+        className="w-full max-w-xs mx-auto "
       >
         <CarouselContent>
           {products.slice(0, 10).map((item) => (
-            <CarouselItem key={item.id}>
+            <CarouselItem  key={item.id}>
               <div className="flex justify-center items-center h-64 m-2">
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="h-full object-contain"
+                  className="h-full object-contain "
                 />
               </div>
             </CarouselItem>
@@ -60,7 +78,7 @@ const Home = () => {
           </Link>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

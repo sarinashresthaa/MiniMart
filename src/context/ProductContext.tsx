@@ -25,8 +25,9 @@ interface Cart{
 }
 interface ProductContextType {
   products: Product[];
-  cart:Cart[],
-  addToCart:(item:Cart)=>void
+  cart:Cart[];
+  loading:boolean;
+  addToCart:(item:Cart)=>void;
 }
 const ProductContext = createContext<ProductContextType | null>(null);
 
@@ -36,6 +37,7 @@ export const ProductProvider = ({
   children: React.ReactNode;
 }) => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true)
  // Lazy init from localStorage
   const [cart, setCart] = useState<Cart[]>(() => {
     const storedCart = localStorage.getItem("cart");
@@ -52,9 +54,10 @@ export const ProductProvider = ({
         "https://fakestoreapi.com/products"
       );
       setProducts(res.data);
-      console.log(res.data);
     } catch (err) {
       console.error("Failed to fetch products", err);
+    } finally{
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -66,16 +69,17 @@ export const ProductProvider = ({
     if (existing) {
       return prev.map(ci =>
         ci.item_id === item.item_id
-          ? { ...ci, quantity: Math.min(ci.quantity + item.quantity, 15) }
+          ? { ...ci, quantity: Math.min(Math.max(ci.quantity + item.quantity, 1),15) }
           : ci
       );
+      //ci.quantity is already cart ma vako and item.quantity is new add huda aaune quantity
     }
     return [...prev, item];
   });
 };
 
   return (
-    <ProductContext.Provider value={{ products,cart,addToCart }}>
+    <ProductContext.Provider value={{ products,cart,loading,addToCart }}>
       {children}
     </ProductContext.Provider>
   );

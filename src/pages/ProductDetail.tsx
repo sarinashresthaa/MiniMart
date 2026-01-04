@@ -2,11 +2,12 @@
 import {  useState } from "react";
 import { useParams } from "react-router-dom";
 import { useProducts } from "../context/ProductContext";
+import { Spinner } from "@/components/ui/spinner";
+
 
 const ProductDetail = () => {
   const { id } = useParams();
-  console.log(id);
-  const{products, addToCart} = useProducts();
+  const{products, addToCart, loading} = useProducts();
   // useParams() gives strings
   // Number(id) converts "5" → 5 so that the comparison works
   const product = products.find(p=>p.id===Number(id));
@@ -23,6 +24,21 @@ const ProductDetail = () => {
     addToCart({ item_id: product.id, quantity });
     alert("✅ Added to cart successfully!")
   }
+if (loading) {
+  return (
+    <div className="flex justify-center items-center min-h-[60vh]">
+      <Spinner className="size-8 text-pink-500" />
+    </div>
+  )
+}
+if (!products) {
+  return (
+    <div className="flex justify-center items-center min-h-[60vh]">
+      <Spinner className="size-8 text-gray-600" />
+    </div>
+  )
+}
+
   return (
     <div className="max-w-5xl mx-auto lg:p-6 p-1 ">
       <div className="flex flex-col lg:gap-8 gap-4 bg-white shadow-lg rounded-lg p-6">

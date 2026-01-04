@@ -1,8 +1,9 @@
 import { useMemo } from "react";
 import { useProducts } from "../context/ProductContext";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { products, cart,addToCart } = useProducts();
+  const { products, cart, addToCart } = useProducts();
   const cartItems = useMemo(() => {
     return cart.map((ci) => {
       const product = products.find((p) => p.id === ci.item_id);
@@ -16,52 +17,67 @@ const Cart = () => {
       0
     );
   }, [cartItems]);
+
+  if (cart.length === 0) {
+    return (
+      <p className="text-center mt-30 font-bold text-3xl text-gray-700">
+        Cart is empty 🛒
+      </p>
+    );
+  }
   return (
     <div className="flex justify-center w-full">
       <div className="w-full max-w-7xl px-4 lg:px-8">
-
-      <h1 className="text-2xl font-bold m-6">Your Cart</h1>
-      <div className="  flex flex-col gap-4 ">
-        {cartItems.map((item) => (
-          <div
-          key={item.item_id}
-          className="grid lg:grid-cols-[120px_1fr_180px_200px]   gap-4 items-center bg-white p-8 rounded-lg shadow-lg border border-gray-200 "
-          >
-            <img
-              src={item.product?.image}
-              alt={item.product?.title}
-              className="h-40 w-40 lg:h-20 lg:w-20 object-contain mx-auto lg:mx-0"
+        <h1 className="text-2xl font-bold m-6">Your Cart</h1>
+        <div className="  flex flex-col gap-4 ">
+          {cartItems.map((item) => (
+            <Link to={`/${item.product?.category}/${item.item_id}`}
+              key={item.item_id}
+              className="grid lg:grid-cols-[120px_1fr_180px_200px]  gap-4 items-center bg-white p-8 rounded-lg shadow-lg border border-gray-200"
+            >
+              <img
+                src={item.product?.image}
+                alt={item.product?.title}
+                className="h-40 w-40 lg:h-24 lg:w-24 object-contain mx-auto lg:mx-0 p-2 rounded bg-gray-200"
               />
-            <p className="font-semibold text-gray-800 text-2xl lg:text-base text-center lg:text-left">{item.product?.title}</p>
-            <p className="text-pink-500 font-bold text-xl lg:text-base text-center lg:text-left">
-              ${item.product?.price}* {item.quantity}= $
-              {((item.product?.price || 0) * item.quantity).toFixed(2)}
-            </p>
+              
+              <p className="font-semibold text-gray-800 text-2xl lg:text-base text-center lg:text-left">
+                {item.product?.title}
+              </p>
+              <p className="text-pink-500 font-bold text-xl lg:text-base text-center lg:text-left">
+                ${item.product?.price}* {item.quantity}= $
+                {((item.product?.price || 0) * item.quantity).toFixed(2)}
+              </p>
 
-             <div className="flex gap-4 justify-center lg:justify-start">
-            <span className="text-gray-600  text-xl lg:text-base">Quantity</span>
-            <button
-                        onClick={()=>addToCart({item_id:item.item_id,quantity:-1})}
-
-              className=" px-4 font-bold cursor-pointer bg-gray-200 text-gray-600 disabled:cursor-not-allowed "
-              >
-              -
-            </button>
-            <span className="font-bold ">{item.quantity}</span>
-            <button 
-            onClick={()=>addToCart({item_id:item.item_id,quantity:1})}
-            className="px-4 font-bold bg-gray-200 text-gray-600 cursor-pointer disabled:cursor-not-allowed ">
-              +
-            </button>
-          </div>
-          
-          </div>
-        ))}
-      </div>
-      <h2 className="font-bold mt-4 text-right text-xl lg:text-base text-gray-800">
-        Total:${totalPrice.toFixed(2)}
-      </h2>
+              <div className="flex gap-4 justify-center lg:justify-start">
+                <span className="text-gray-600  text-xl lg:text-base ">
+                  Quantity
+                </span>
+                <button
+                  onClick={() =>
+                    addToCart({ item_id: item.item_id, quantity: -1 })
+                  }
+                  className=" px-4 font-bold cursor-pointer bg-gray-200 text-gray-600 disabled:cursor-not-allowed "
+                >
+                  -
+                </button>
+                <span className="font-bold ">{item.quantity}</span>
+                <button
+                  onClick={() =>
+                    addToCart({ item_id: item.item_id, quantity: 1 })
+                  }
+                  className="px-4 font-bold bg-gray-200 text-gray-600 cursor-pointer disabled:cursor-not-allowed "
+                >
+                  +
+                </button>
+              </div>
+            </Link>
+          ))}
         </div>
+        <h2 className="font-bold mt-4 text-right text-xl lg:text-base text-gray-800">
+          Total:${totalPrice.toFixed(2)}
+        </h2>
+      </div>
     </div>
   );
 };
