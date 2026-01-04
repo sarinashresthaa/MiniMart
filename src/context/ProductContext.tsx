@@ -28,6 +28,8 @@ interface ProductContextType {
   cart:Cart[];
   loading:boolean;
   addToCart:(item:Cart)=>void;
+  removeFromCart:(item_id:number)=>void;
+  clearCart:()=>void;
 }
 const ProductContext = createContext<ProductContextType | null>(null);
 
@@ -48,6 +50,7 @@ export const ProductProvider = ({
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
+  
   const callApi = async () => {
     try {
       const res = await axios.get<Product[]>(
@@ -77,9 +80,17 @@ export const ProductProvider = ({
     return [...prev, item];
   });
 };
+  const removeFromCart=(item_id:number)=>{
+    setCart(prev=>prev.filter(item=>item.item_id !== item_id));
+  };
+
+  const clearCart = () =>{
+    setCart([])
+  };
+
 
   return (
-    <ProductContext.Provider value={{ products,cart,loading,addToCart }}>
+    <ProductContext.Provider value={{ products,cart,loading,addToCart, removeFromCart, clearCart }}>
       {children}
     </ProductContext.Provider>
   );
